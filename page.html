@@ -177,6 +177,51 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 #trystat{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .tries{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 
+/* ---------- model switch ---------- */
+.switch{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border:1.5px solid var(--line);border-radius:16px;background:var(--panel2);margin-bottom:18px;max-width:100%}
+.switch button{font:inherit;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:12px;padding:9px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;transition:background .25s,color .25s,transform .25s}
+.switch button b{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.1}
+.switch button span{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em}
+.switch button:hover{color:var(--ink)}
+.switch button[aria-pressed="true"]{background:var(--ink);color:var(--bg);transform:translateY(-1px)}
+.switch button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.where{font-size:14px;color:var(--muted);margin:0 0 18px;max-width:70ch}
+.where b{color:var(--ink)}
+
+/* ---------- models ---------- */
+.mods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:760px){.mods{grid-template-columns:minmax(0,1fr)}}
+.mod{background:var(--panel);border:1.5px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0;transition:transform .3s cubic-bezier(.2,.9,.3,1.3),border-color .3s}
+.mod:hover{transform:translateY(-6px);border-color:var(--ink)}
+.mod-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.mod-top h3{font-size:clamp(26px,3vw,38px)}
+.mod-top code{font-family:var(--mono);font-size:11px;color:var(--muted);border:1.5px solid var(--line);border-radius:7px;padding:3px 7px}
+.mod p{margin:0;color:var(--muted);font-size:15px}
+.mod dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1.5px solid var(--line);border-radius:14px;overflow:hidden}
+.mod dl div{padding:12px 14px;border-right:1.5px solid var(--line);border-bottom:1.5px solid var(--line);margin:0 -1.5px -1.5px 0;min-width:0}
+.mod dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mod dd{margin:2px 0 0;font-family:var(--display);font-weight:800;font-size:22px;line-height:1.15;font-variant-numeric:tabular-nums}
+.mod-foot{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:auto;padding-top:4px}
+.mod-foot span{font-size:13px;color:var(--muted)}
+.bench{margin-top:18px;background:var(--panel);border:1.5px solid var(--line);border-radius:22px;padding:24px;min-width:0}
+.bench-h{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-bottom:6px}
+.bench-h span{font-size:14px;color:var(--muted)}
+.bgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 34px;margin-top:18px}
+@media (max-width:760px){.bgrid{grid-template-columns:minmax(0,1fr)}}
+.btest h4{margin:0 0 2px;font-family:var(--body);font-weight:700;font-size:15px}
+.btest small{display:block;font-size:13px;color:var(--muted);margin-bottom:10px}
+.brow{display:grid;grid-template-columns:104px minmax(0,1fr) 52px;gap:10px;align-items:center;padding:4px 6px;margin:0 -6px;border-radius:8px;font-size:13px;position:relative}
+.brow:hover,.brow:focus-visible{background:var(--panel2);outline:0}
+.brow .bn{color:var(--muted);white-space:nowrap}
+.brow .bv{font-family:var(--mono);font-size:12px;text-align:right;font-variant-numeric:tabular-nums}
+.brow .bt{height:12px;display:block}
+.brow .bt i{display:block;height:100%;width:0;background:var(--brand);border-radius:0 4px 4px 0;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.brow.raw .bt i{opacity:.38}
+.brow.best .bn,.brow.best .bv{color:var(--ink);font-weight:700}
+.brow .tip{position:absolute;left:120px;bottom:calc(100% + 4px);z-index:5;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.4;padding:7px 10px;border-radius:8px;max-width:min(300px,70vw);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
+.brow:hover .tip,.brow:focus-visible .tip{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.brow .bt i,.mod,.switch button{transition:none}}
+
 /* ---------- numbers ---------- */
 .nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1.5px solid var(--line);border-radius:22px;overflow:hidden;background:var(--panel)}
 @media (max-width:860px){.nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -256,7 +301,7 @@ footer{border-top:1.5px solid var(--line);padding-block:44px 30px;overflow:hidde
   <div class="wrap nav">
     <a class="logo" href="#top"><span class="chip" id="logochip">✓Aa</span>WriteFix</a>
     <nav aria-label="Sections">
-      <a href="#how">How it works</a><a href="#try">Try it</a><a href="#features">Features</a><a href="#install">Install</a><a href="#status">Prototype status</a>
+      <a href="#how">How it works</a><a href="#try">Try it</a><a href="#models">Models</a><a href="#features">Features</a><a href="#install">Install</a><a href="#status">Prototype status</a>
     </nav>
     <a class="btn small" href="#install">Get it</a>
   </div>
@@ -318,11 +363,16 @@ footer{border-top:1.5px solid var(--line);padding-block:44px 30px;overflow:hidde
 <section id="try" style="padding-top:0">
   <div class="wrap">
     <div class="head rv"><p class="eyebrow"><i></i>Try it yourself</p><h2 data-scr>Type your own mess.</h2>
-      <p class="lede">This is the real model, running inside this page on your device. It downloads once, about 28 MB, and nothing you type is sent anywhere.</p></div>
+      <p class="lede">These are the real models. Switch between them and compare what each one writes for the same text.</p></div>
+    <div class="switch rv" id="switch" role="group" aria-label="Choose a model">
+      <button type="button" data-m="mini" aria-pressed="true"><b>WF-1 Mini</b><span>runs in this page</span></button>
+      <button type="button" data-m="large" aria-pressed="false"><b>WF-1 Large</b><span>runs on our server</span></button>
+    </div>
+    <p class="where rv" id="where"></p>
     <div class="try rv">
       <div class="pane"><div class="pane-h">You type<b id="trycount">11 words</b></div>
         <textarea id="tryin" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Type messy text here">i think we shud start the meeting now everyone is here</textarea></div>
-      <div class="pane" id="outpane"><div class="pane-h">WriteFix writes<b id="tryms">example</b></div>
+      <div class="pane" id="outpane"><div class="pane-h"><span id="trywho">WF-1 Mini writes</span><b id="tryms">example</b></div>
         <div id="tryout" aria-live="polite">I think we <span class="ch">should</span> start the meeting <span class="ch">now.</span> <span class="ch">Everyone</span> is here.</div></div>
     </div>
     <div class="trybar rv">
@@ -334,13 +384,26 @@ footer{border-top:1.5px solid var(--line);padding-block:44px 30px;overflow:hidde
   </div>
 </section>
 
+<section id="models" style="padding-top:0">
+  <div class="wrap">
+    <div class="head rv"><p class="eyebrow"><i></i>Models</p><h2 data-scr>Two sizes. Same job.</h2>
+      <p class="lede">Both were built and trained from zero on the same 8.6 million sentences. Pick the one your Mac can carry.</p></div>
+    <div class="mods" id="mods"></div>
+    <div class="bench rv" id="benchbox">
+      <div class="bench-h"><h3>Benchmarks</h3><span>Share of words still wrong after correction, same tests for both models. Shorter bar is better.</span></div>
+      <div class="bgrid" id="bench"></div>
+      <p class="note" id="benchnote"></p>
+    </div>
+  </div>
+</section>
+
 <section id="numbers" style="padding-top:0">
   <div class="wrap">
     <div class="nums rv">
-      <div class="num"><b data-n="10.5" data-d="1" data-s="M">10.5M</b><span>parameters, all trained from zero</span></div>
-      <div class="num"><b data-n="21" data-s=" MB">21 MB</b><span>the whole model on disk</span></div>
-      <div class="num"><b data-n="22" data-s=" ms">22 ms</b><span>to fix a 14-word sentence on an M3</span></div>
-      <div class="num"><b data-n="8.6" data-d="1" data-s="M">8.6M</b><span>sentences it learned from</span></div>
+      <div class="num"><b data-n="2">2</b><span>models, both trained from zero</span></div>
+      <div class="num"><b data-n="21" data-s=" MB">21 MB</b><span>WF-1 Mini on disk, Large is 187 MB</span></div>
+      <div class="num"><b data-n="21" data-s=" ms">21 ms</b><span>for Mini to fix a 14-word sentence, 116 ms for Large</span></div>
+      <div class="num"><b data-n="8.6" data-d="1" data-s="M">8.6M</b><span>sentences they learned from</span></div>
       <div class="num"><b data-n="0">0</b><span>pretrained weights borrowed</span></div>
       <div class="num"><b data-n="0" data-s=" bytes">0 bytes</b><span>of your typing sent anywhere</span></div>
       <div class="num"><b data-n="1" data-s=" s">1 s</b><span>pause before it steps in</span></div>
@@ -387,7 +450,9 @@ footer{border-top:1.5px solid var(--line);padding-block:44px 30px;overflow:hidde
         <li class="rv"><h3>Download WriteFix</h3><p>It has to live in a folder called writefix in your home folder, because the app loads its code from there.</p>
           <div class="code"><pre>git clone https://github.com/rishiraj38/writefix.git ~/writefix</pre><button type="button">Copy</button></div></li>
         <li class="rv"><h3>Run the installer</h3><p>It sets up Python packages in their own folder, builds the menu-bar app and opens it. Look for <span class="mono">…Aa</span> in the menu bar.</p>
-          <div class="code"><pre>cd ~/writefix && ./install.sh</pre><button type="button">Copy</button></div></li>
+          <div class="code"><pre>cd ~/writefix && ./install.sh</pre><button type="button">Copy</button></div>
+          <p>That installs WF-1 Mini. For WF-1 Large, run this instead. It downloads 187 MB more, and you can switch back any time with <span class="mono">./scripts/use_model.sh mini</span>.</p>
+          <div class="code"><pre>cd ~/writefix && ./install.sh large</pre><button type="button">Copy</button></div></li>
         <li class="rv"><h3>Allow it to see your typing</h3><p>macOS asks once. Open System Settings, then Privacy &amp; Security, then Accessibility, and switch on WriteFixApp. The icon turns to <span class="mono">✓Aa</span>. Type four or more words anywhere and stop for a second.</p></li>
       </ol>
     </div>
@@ -402,14 +467,15 @@ footer{border-top:1.5px solid var(--line);padding-block:44px 30px;overflow:hidde
         <li><b>Capitals and punctuation:</b> full stops, commas, question marks, apostrophes.</li>
         <li><b>Common typos:</b> tommorow, becuase, realy, freind, resturant.</li>
         <li><b>Chat shorthand:</b> u, pls, abt become you, please, about.</li>
-        <li><b>Word errors on test text:</b> 26% before, 9% after.</li></ul></div>
+        <li><b>Word errors on test text:</b> 27% before, 9% after with Mini, 5% with Large.</li>
+        <li><b>Harder slips, with Large:</b> "alot", "this are" and "pls" now get fixed.</li></ul></div>
       <div class="col no rv"><h3><i></i>Not yet</h3><ul>
-        <li><b>Harder spellings and grammar:</b> it leaves "alot" and "this are" as they are.</li>
-        <li><b>Correct text:</b> it still changes about 3 in 100 sentences that were already fine.</li>
+        <li><b>Long, messy messages:</b> on very rough text with tech words, both models still leave about a third of the words wrong.</li>
+        <li><b>Correct text:</b> Mini changes about 5 in 100 sentences that were already fine, Large about 1.</li>
         <li><b>English only,</b> and Mac only.</li>
         <li><b>Tested apps:</b> TextEdit so far. Others are being tried now.</li></ul></div>
     </div>
-    <div class="road rv" aria-label="Planned next"><span>bigger 24M model</span><span>one-click installer</span><span>personal word list</span><span>tone modes</span><span>more apps tested</span></div>
+    <div class="road rv" aria-label="Planned next"><span>tech words and names</span><span>one-click installer</span><span>personal word list</span><span>tone modes</span><span>more apps tested</span></div>
   </div>
 </section>
 </main>
@@ -764,20 +830,75 @@ $$('.code button').forEach(b => b.onclick = () => { const pre = b.previousElemen
   const sel = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected'; };
   try { navigator.clipboard.writeText(pre.textContent).then(done, sel); } catch (_) { sel(); } });
 
-/* ---------- try it yourself: the real model, in the page ---------- */
+/* ---------- the two models: one place for every number shown about them ---------- */
+const HUB = 'https://huggingface.co/rishi38/writefix-models';
+const WFM = {
+  mini: {name: 'WF-1 Mini', id: 'wf-1-mini', blurb: 'The light one. Small enough to run inside this web page, and quick on any Mac.',
+    stats: [['Parameters', '10.5M'], ['Download', '21 MB'], ['One sentence', '21 ms'], ['Trained for', '3.5 h on a MacBook']], fit: 'Fits any Apple Silicon Mac'},
+  large: {name: 'WF-1 Large', id: 'wf-1-large', blurb: 'The accurate one. Nine times bigger. It leaves fewer mistakes behind and rarely touches text that was already right.',
+    stats: [['Parameters', '93.6M'], ['Download', '187 MB'], ['One sentence', '116 ms'], ['Trained for', '6.6 h on a cloud GPU']], fit: 'Best with 16 GB memory'}
+};
+/* word error rate in percent: [no correction, Mini, Large] */
+const BENCH = [
+  {t: 'Typing mistakes', d: '600 unseen sentences with typos and missing punctuation added', v: [27.2, 9.2, 4.7]},
+  {t: 'Chat messages', d: '16 messages written the way people text', v: [35.3, 11.8, 9.6]},
+  {t: 'English learners (JFLEG)', d: '747 sentences by learners, graded against human corrections', v: [12.9, 11.3, 10.3]},
+  {t: 'Rishi\'s real messages', d: '7 long messages copied as typed. A small, hard set where Large is no better yet.', v: [49.5, 34.5, 34.5]},
+  {t: 'Correct text changed by mistake', d: '394 sentences that needed no fixing. Share of them the model altered.', v: [null, 4.8, 1.3], own: 1}
+];
 (function(){
-  const inp = $('#tryin'), out = $('#tryout'), btn = $('#trybtn'), auto = $('#tryauto'), load = $('#tryload'), bar2 = load.firstElementChild, stat = $('#trystat'), ms = $('#tryms'), cnt = $('#trycount'), pane = $('#outpane');
-  let loading = null, timer = 0, job = 0, last = '';
+  const mods = $('#mods'); if (!mods) return;
+  Object.values(WFM).forEach(m => { const d = document.createElement('article'); d.className = 'mod rv';
+    d.innerHTML = `<div class="mod-top"><h3>${m.name}</h3><code>${m.id}</code></div><p>${m.blurb}</p><dl>${m.stats.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+      <div class="mod-foot"><a class="btn small" href="${HUB}/resolve/main/${m.id}.pt?download=true" rel="noopener">Download ${m.stats[1][1]}</a><span>${m.fit}</span></div>`; mods.appendChild(d); });
+  const names = ['No correction', WFM.mini.name, WFM.large.name], box = $('#bench'), max = Math.max(...BENCH.flatMap(x => x.v.filter(n => n != null)));
+  BENCH.forEach(x => { const el = document.createElement('div'); el.className = 'btest'; const got = x.v.filter(n => n != null), best = Math.min(...got), tie = got.filter(n => n === best).length > 1;
+    el.innerHTML = `<h4>${x.t}</h4><small>${x.d}</small>` + x.v.map((n, i) => n == null ? '' : `<div class="brow${i === 0 ? ' raw' : ''}${n === best && !tie ? ' best' : ''}" tabindex="0" aria-label="${names[i]}: ${n}%">
+      <span class="bn">${names[i]}</span><span class="bt"><i data-w="${(n / (x.own ? 12 : max) * 100).toFixed(1)}"></i></span><span class="bv">${n}%</span>
+      <span class="tip">${x.own ? `${names[i]} altered ${n} in 100 sentences that were already correct.` : i === 0 ? `Before any fixing, ${n} in 100 words are wrong.` : `${names[i]} leaves ${n} in 100 words wrong, down from ${x.v[0]}.`}</span></div>`).join('');
+    box.appendChild(el); });
+  $('#benchnote').textContent = 'Measured on text neither model saw in training. The first set uses made-up mistakes, so real typing scores worse than it suggests. The last panel has its own scale.';
+  const grow = () => $$('#bench i').forEach(i => { i.style.width = i.dataset.w + '%'; });
+  if ('IntersectionObserver' in window) new IntersectionObserver((es, o) => { if (es.some(e => e.isIntersecting)) { grow(); o.disconnect(); } }, {threshold: .15}).observe(box); else grow();
+})();
+
+/* ---------- try it yourself: both real models, one switch ---------- */
+(function(){
+  const inp = $('#tryin'), out = $('#tryout'), btn = $('#trybtn'), auto = $('#tryauto'), load = $('#tryload'), bar2 = load.firstElementChild, stat = $('#trystat'), ms = $('#tryms'), cnt = $('#trycount'), pane = $('#outpane'), who = $('#trywho'), where = $('#where');
+  const API = 'https://rishi38-writefix.hf.space/gradio_api/call/fix';
+  let loading = null, timer = 0, job = 0, last = '', model = 'mini';
+  const WHERE = {mini: '<b>WF-1 Mini runs on your device.</b> It downloads once, about 28 MB, and nothing you type is sent anywhere.',
+    large: '<b>WF-1 Large runs on a free Hugging Face server,</b> because 187 MB is too much for a web page. With this switch on, the text in the box is sent there to be fixed. Installed on your Mac, it runs offline like Mini.'};
   const SAMPLES = ["sorry i couldnt reply yesterday i was bussy with my exams","my freind told me that the resturant near the station is very good","can u send me the notes from todays class i missed it becuase i was sick","thank you so much for helping me i realy apreciate it"];
   SAMPLES.forEach(t => { const b = document.createElement('button'); b.type = 'button'; b.className = 'eg'; b.textContent = t.split(' ').slice(0, 5).join(' ') + '…'; b.onclick = () => { inp.value = t; words(); run(); }; $('#tries').appendChild(b); });
   function words(){ const n = inp.value.trim() ? inp.value.trim().split(/\s+/).length : 0; cnt.textContent = n + (n === 1 ? ' word' : ' words'); }
+  function pick(m, go){ model = m; $$('#switch button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m)); where.innerHTML = WHERE[m]; who.textContent = WFM[m].name + ' writes';
+    load.classList.remove('busy'); bar2.style.width = m === 'mini' && loading ? '100%' : '0';
+    stat.textContent = m === 'mini' ? (WF.ready() ? 'Model ready, running on your device' : 'Model loads when you start typing') : 'Runs on the server when you press Fix it';
+    if (go && inp.value.trim()) run(); }
+  $$('#switch button').forEach(b => b.onclick = () => pick(b.dataset.m, true));
   function ensure(){
     if (loading) return loading;
     load.classList.add('busy'); bar2.style.width = '12%'; stat.textContent = 'Downloading the model (28 MB)…';
-    loading = WF.load(p => fetch(p).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }), f => { bar2.style.width = Math.max(12, f * 100) + '%'; })
-      .then(() => { load.classList.remove('busy'); bar2.style.width = '100%'; stat.textContent = 'Model ready, running on your device'; })
+    loading = WF.load(p => fetch(p).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }), f => { if (model === 'mini') bar2.style.width = Math.max(12, f * 100) + '%'; })
+      .then(() => { if (model !== 'mini') return; load.classList.remove('busy'); bar2.style.width = '100%'; stat.textContent = 'Model ready, running on your device'; })
       .catch(() => { load.classList.remove('busy'); bar2.style.width = '0'; loading = null; stat.innerHTML = 'The model could not load here. Use the <a href="https://huggingface.co/spaces/rishi38/writefix" target="_blank" rel="noopener">hosted demo</a> instead.'; throw new Error('load'); });
     return loading;
+  }
+  /* WF-1 Large: ask the Space. It sleeps when unused, so the first call may have to wake it. */
+  async function remote(text, alive){
+    const t0 = Date.now(); let woke = false;
+    for (;;) {
+      if (!alive()) return null;
+      try {
+        const r = await fetch(API, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({data: [text.slice(0, 1500), WFM.large.name]})});
+        if (r.ok) { const id = (await r.json()).event_id, body = await (await fetch(API + '/' + id)).text(), m = body.match(/event: complete\s*\ndata: (.*)/);
+          if (m) return JSON.parse(m[1])[0]; if (/event: error/.test(body) && woke === 'err') throw new Error('server'); woke = 'err'; }
+      } catch (e) { if (e.message === 'server') throw e; }
+      if (Date.now() - t0 > 150000) throw new Error('timeout');
+      if (alive()) stat.textContent = 'Waking the server, this can take a minute…';
+      await new Promise(r => setTimeout(r, 4000));
+    }
   }
   function show(src, fixed){ out.textContent = '';
     const a = src.trim().split(/\s+/), lines = fixed.split('\n'); let k = 0;
@@ -788,17 +909,26 @@ $$('.code button').forEach(b => b.onclick = () => { const pre = b.previousElemen
   }
   async function run(){
     const text = inp.value; if (!text.trim()) { out.textContent = ''; return; }
-    const id = ++job; try { await ensure(); } catch (_) { return; } if (id !== job) return;
-    stat.textContent = 'Fixing…'; ms.textContent = '…'; const t0 = performance.now();
-    const fixed = await WF.fix(text, partial => new Promise(r => { if (id === job) out.textContent = partial; setTimeout(r, 0); }));
-    if (id !== job) return; last = text;
+    const id = ++job, m = model; let fixed, t0;
+    if (m === 'mini') {
+      try { await ensure(); } catch (_) { return; } if (id !== job) return;
+      stat.textContent = 'Fixing…'; ms.textContent = '…'; t0 = performance.now();
+      fixed = await WF.fix(text, partial => new Promise(r => { if (id === job) out.textContent = partial; setTimeout(r, 0); }));
+    } else {
+      stat.textContent = 'Sending to the server…'; ms.textContent = '…'; load.classList.add('busy'); bar2.style.width = '100%'; t0 = performance.now();
+      try { fixed = await remote(text, () => id === job); }
+      catch (_) { if (id === job) { load.classList.remove('busy'); bar2.style.width = '0'; ms.textContent = ''; stat.textContent = 'The server did not answer. Try again in a minute, or switch to WF-1 Mini.'; } return; }
+      if (id === job) { load.classList.remove('busy'); bar2.style.width = '0'; }
+    }
+    if (id !== job || fixed == null) return; last = m + text;
     show(text.replace(/\n/g, ' '), fixed); const dt = Math.round(performance.now() - t0);
-    ms.textContent = dt + ' ms'; stat.textContent = fixed === text ? 'Nothing to fix in that one' : 'Fixed on your device in ' + dt + ' ms';
+    ms.textContent = dt + ' ms'; stat.textContent = fixed === text ? 'Nothing to fix in that one' : m === 'mini' ? 'Fixed on your device in ' + dt + ' ms' : 'Fixed on the server in ' + dt + ' ms, including the trip there and back';
     pane.classList.remove('done'); void pane.offsetWidth; pane.classList.add('done');
   }
   btn.onclick = run;
-  inp.addEventListener('focus', () => { ensure().catch(() => {}); });
-  inp.addEventListener('input', () => { words(); clearTimeout(timer); if (auto.checked) timer = setTimeout(() => { if (inp.value !== last) run(); }, 1000); });
+  inp.addEventListener('focus', () => { if (model === 'mini') ensure().catch(() => {}); });
+  inp.addEventListener('input', () => { words(); clearTimeout(timer); if (auto.checked) timer = setTimeout(() => { if (model + inp.value !== last) run(); }, model === 'mini' ? 1000 : 1400); });
+  pick('mini', false);
 })();
 
 /* ---------- footer wordmark ---------- */
